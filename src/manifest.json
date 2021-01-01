@@ -2,17 +2,31 @@
   "manifest_version": 2,
   "name": "Scalper Manager",
   "version": "0.1",
+  "description": "転売業者の表示とリスト管理を行います。",
   "content_scripts":[
     {
       "matches": ["https://www.amazon.co.jp/*"],
       "js": [
         "resaler_black_list.js",
-        "resaler_marker_united.js"
+        "resaler_marker_united.js",
+        "exportList.js"
       ]
     }
   ],
+  "applications": {
+    "gecko": {
+      "id": "scalpermanager@firefox.com"
+    }
+  },
   "background": {
-    "scripts": ["script.js"],
-    "persistent": false
-  }
+    "scripts": ["bgs.js"]
+  },
+  "permissions": [
+    "https://www.amazon.co.jp/",
+    "tabs",
+    "unlimitedStorage",
+    "storage",
+    "menus"
+  ]
 }
+
