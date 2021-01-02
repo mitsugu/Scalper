@@ -9,7 +9,7 @@
       "js": [
         "resaler_black_list.js",
         "resaler_marker_united.js",
-        "exportList.js"
+        "importExportList.js"
       ]
     }
   ],
@@ -19,7 +19,13 @@
     }
   },
   "background": {
-    "scripts": ["bgs.js"]
+    "scripts": [
+      "bgs.js"
+    ]
+  },
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true
   },
   "permissions": [
     "https://www.amazon.co.jp/",
