@@ -101,19 +101,26 @@ function add_black_list(id){
   if(blackList.filter(is_in(id)).length==0){
     blackList.push(id);
     localStorage.qd_blacklist_on_amazon=JSON.stringify(blackList);
+    browser.storage.local.set({"keyScalperList":localStorage.qd_blacklist_on_amazon});
+    //e.preventDefault();
   }
 }
 ut1=0;
 
 function black_list_switch(seller,type){
   if(blackList.filter(is_in(seller)).length==0){
-    if(confirm("このセラーをブラックリストに追加しますか？")){ blackList.push(seller);
+    if(confirm("このセラーをブラックリストに追加しますか？")){
+      blackList.push(seller);
       localStorage.qd_blacklist_on_amazon=JSON.stringify(blackList);
+      browser.storage.local.set({"keyScalperList":localStorage.qd_blacklist_on_amazon});
+      //e.preventDefault();
       qd_mark_resaler(JSON.parse(localStorage.qd_blacklist_on_amazon),type);
     }
   }else{
     if(confirm("このセラーをブラックリストから除外しますか？")){
       localStorage.qd_blacklist_on_amazon=JSON.stringify(blackList.filter(is_not_in(seller)));
+      browser.storage.local.set({"keyScalperList":localStorage.qd_blacklist_on_amazon});
+      //e.preventDefault();
       qd_mark_resaler(JSON.parse(localStorage.qd_blacklist_on_amazon),type);
     }
   }
