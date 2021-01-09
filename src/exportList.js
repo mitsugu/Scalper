@@ -24,29 +24,3 @@ chrome.runtime.onMessage.addListener(
   }
 );
 
-function importList(str) {
-  localStorage.qd_blacklist_on_amazon = str;
-}
-
-browser.storage.onChanged.addListener(changeData => {
-  strScalperList = changeData.keyScalperList.newValue;
-  importList(strScalperList);
-});
-
-function initialLoadLocalStorageData(str){
-  localStorage.qd_blacklist_on_amazon = str;
-}
-
-function onError(error) {
-  console.error("Error: ${error}");
-}
-
-function init() {
-  let gettingItem = browser.storage.local.get(
-    "keyScalperList"
-  );
-  gettingItem.then(initialLoadLocalStorageData, onError);
-}
-
-document.addEventListener('load', init);
-

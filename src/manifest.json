@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Scalper Manager",
-  "version": "0.3",
+  "version": "0.4",
   "description": "転売業者の表示とリスト管理を行います。",
   "content_scripts":[
     {
@@ -9,7 +9,7 @@
       "js": [
         "resaler_black_list.js",
         "resaler_marker_united.js",
-        "importExportList.js"
+        "exportList.js"
       ]
     }
   ],

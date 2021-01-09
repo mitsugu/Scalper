@@ -154,10 +154,30 @@ function on_amazon(){
   }
 }
 
+function initialLoadLocalStorageData(result){
+  localStorage.qd_blacklist_on_amazon = result.keyScalperList;
+  console.clear();
+  console.log(localStorage.qd_blacklist_on_amazon);
+}
+
+function onError(error) {
+  console.clear();
+  console.error("Error: ${error}");
+}
+
+function init() {
+  console.log('run init()');
+  let gettingItem = browser.storage.local.get(
+    "keyScalperList"
+  );
+  gettingItem.then(initialLoadLocalStorageData, onError);
+}
+
 var type='';  // ここでどのサイト用のCSSを指定するか決める
 function amazon_black_list(){
   // ut=Math.round((new Date()).getTime() / 1000);
   // ブラックリストを読み出し
+  init(); // See line 44 of importExpor.js
   blackList=[];
   try{
     blackList=JSON.parse(localStorage.qd_blacklist_on_amazon);
