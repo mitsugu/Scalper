@@ -1,2 +1,3 @@
-amazon_black_list();
+//amazon_black_list();
+init();
 

@@ -100,9 +100,7 @@ function is_not_in(target){
 function add_black_list(id){
   if(blackList.filter(is_in(id)).length==0){
     blackList.push(id);
-    localStorage.qd_blacklist_on_amazon=JSON.stringify(blackList);
-    browser.storage.local.set({"keyScalperList":localStorage.qd_blacklist_on_amazon});
-    //e.preventDefault();
+    browser.storage.local.set({"keyScalperList":JSON.stringify(blackList)});
   }
 }
 ut1=0;
@@ -111,17 +109,15 @@ function black_list_switch(seller,type){
   if(blackList.filter(is_in(seller)).length==0){
     if(confirm("このセラーをブラックリストに追加しますか？")){
       blackList.push(seller);
-      localStorage.qd_blacklist_on_amazon=JSON.stringify(blackList);
-      browser.storage.local.set({"keyScalperList":localStorage.qd_blacklist_on_amazon});
-      //e.preventDefault();
-      qd_mark_resaler(JSON.parse(localStorage.qd_blacklist_on_amazon),type);
+      let jsonBlacklist=JSON.stringify(blackList);
+      browser.storage.local.set({"keyScalperList":jsonBlacklist});
+      qd_mark_resaler(JSON.parse(jsonBlacklist),type);
     }
   }else{
     if(confirm("このセラーをブラックリストから除外しますか？")){
-      localStorage.qd_blacklist_on_amazon=JSON.stringify(blackList.filter(is_not_in(seller)));
-      browser.storage.local.set({"keyScalperList":localStorage.qd_blacklist_on_amazon});
-      //e.preventDefault();
-      qd_mark_resaler(JSON.parse(localStorage.qd_blacklist_on_amazon),type);
+      let jsonBlacklist = JSON.stringify(blackList.filter(is_not_in(seller)));
+      browser.storage.local.set({"keyScalperList":jsonBlacklist});
+      qd_mark_resaler(JSON.parse(jsonBlacklist),type);
     }
   }
 }
@@ -154,33 +150,13 @@ function on_amazon(){
   }
 }
 
-function initialLoadLocalStorageData(result){
-  localStorage.qd_blacklist_on_amazon = result.keyScalperList;
-  console.clear();
-  console.log(localStorage.qd_blacklist_on_amazon);
-}
-
-function onError(error) {
-  console.clear();
-  console.error("Error: ${error}");
-}
-
-function init() {
-  console.log('run init()');
-  let gettingItem = browser.storage.local.get(
-    "keyScalperList"
-  );
-  gettingItem.then(initialLoadLocalStorageData, onError);
-}
-
 var type='';  // ここでどのサイト用のCSSを指定するか決める
-function amazon_black_list(){
+function amazon_black_list(strBlockList){
   // ut=Math.round((new Date()).getTime() / 1000);
   // ブラックリストを読み出し
-  init(); // See line 44 of importExpor.js
   blackList=[];
   try{
-    blackList=JSON.parse(localStorage.qd_blacklist_on_amazon);
+    blackList=JSON.parse(strBlockList);
   }catch(e){
     blackList=[];
   };
@@ -228,5 +204,15 @@ function amazon_black_list(){
   }
 
   alert("現在対応しているのはメルカリ、アマゾン、ヤフーのみです")
+}
+
+function init() {
+  let gettingItem = browser.storage.local.get("keyScalperList");
+  gettingItem.then((result) => {
+    let jsonBlackList = result.keyScalperList;
+    amazon_black_list(jsonBlackList);
+  }).catch((error) => {
+    console.error("Error: ${error}");
+  });
 }
 
