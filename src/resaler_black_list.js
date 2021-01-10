@@ -168,6 +168,7 @@ function amazon_black_list(strBlockList){
     return false;
   }
 
+/* {{{
   if( location.href.indexOf("www.mercari.com") < 12
       && location.href.indexOf("www.mercari.com")!=-1){
     type='mercari';
@@ -204,6 +205,9 @@ function amazon_black_list(strBlockList){
   }
 
   alert("現在対応しているのはメルカリ、アマゾン、ヤフーのみです")
+}}} */
+
+  alert("現在対応しているのはアマゾンのみです")
 }
 
 function init() {
