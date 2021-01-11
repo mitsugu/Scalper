@@ -21,7 +21,16 @@ function getTabId() {
 }
 
 browser.menus.create({
+  "id" : "scalper-manager",
+  "title":"Scalper Manager",
+  "type":"normal",
+  "contexts":["all"],
+  "documentUrlPatterns":["https://www.amazon.co.jp/*"]
+});
+
+browser.menus.create({
   "id" : "export-list",
+  "parentId" : "scalper-manager",
   "title":"Export Scalper List",
   "type":"normal",
   "contexts":["all"],
