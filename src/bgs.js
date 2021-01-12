@@ -31,7 +31,7 @@ browser.menus.create({
 browser.menus.create({
   "id" : "export-list",
   "parentId" : "scalper-manager",
-  "title":"Export Scalper List",
+  "title":"Backup Scalper List",
   "type":"normal",
   "contexts":["all"],
   "documentUrlPatterns":["https://www.amazon.co.jp/*"],
