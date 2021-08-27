@@ -20,22 +20,54 @@ function getTabId() {
   querying.then(setTabId, onError);
 }
 
+function toggleScalper(info) {
+  browser.tabs.query({active: true, currentWindow: true})
+  .then(data => {
+    if(data.length==1){
+      let code = info.linkUrl.match(/seller=.*/)[0].replace("seller=","");
+      code = code.substring(0,code.indexOf("&"));
+
+      browser.tabs.query({active: true, lastFocusedWindow: true})
+      .then(res => {
+        browser.tabs.sendMessage(res[0].id, {"command":"setScalper","scalperCode":code})
+        .then(response => {
+          console.log(response);
+        });
+      });
+    }
+  }).catch((error) => {
+    console.error("Error: ${error}");
+  });
+}
+
 browser.menus.create({
-  "id" : "scalper-manager",
-  "title":"Scalper Manager",
-  "type":"normal",
-  "contexts":["all"],
-  "documentUrlPatterns":["https://www.amazon.co.jp/*"]
+  "id"                  : "scalper-manager",
+  "title"               : "Scalper Manager",
+  "type"                : "normal",
+  "contexts"            : ["all"],
+  "documentUrlPatterns" : ["https://www.amazon.co.jp/*"]
 });
 
 browser.menus.create({
-  "id" : "export-list",
-  "parentId" : "scalper-manager",
-  "title":"Backup Scalper List",
-  "type":"normal",
-  "contexts":["all"],
-  "documentUrlPatterns":["https://www.amazon.co.jp/*"],
-  "onclick":function(){
+  "id"                  : "toggle-scalper",
+  "parentId"            : "scalper-manager",
+  "title"               : "Toggle Scalper's Mark",
+  "type"                : "normal",
+  "contexts"            : ["link"],
+  "documentUrlPatterns" : ["https://www.amazon.co.jp/*"],
+  "onclick"             : function(info){
+    toggleScalper(info);
+  }
+});
+
+browser.menus.create({
+  "id"                  : "export-list",
+  "parentId"            : "scalper-manager",
+  "title"               : "Backup Scalper List",
+  "type"                : "normal",
+  "contexts"            : ["all"],
+  "documentUrlPatterns" : ["https://www.amazon.co.jp/*"],
+  "onclick"             : function(){
     getTabId();
   }
 });

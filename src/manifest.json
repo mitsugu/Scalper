@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Scalper Manager",
-  "version": "0.7",
+  "version": "0.8",
   "description": "転売業者の表示とリスト管理を行います。",
   "content_scripts":[
     {

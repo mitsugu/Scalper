@@ -106,7 +106,7 @@ function add_black_list(id){
 ut1=0;
 
 function black_list_switch(seller,type){
-  if(blackList.filter(is_in(seller)).length==0){
+  if(blackList.indexOf(seller)<0){
     if(confirm("このセラーをブラックリストに追加しますか？")){
       blackList.push(seller);
       let jsonBlacklist=JSON.stringify(blackList);
@@ -115,7 +115,8 @@ function black_list_switch(seller,type){
     }
   }else{
     if(confirm("このセラーをブラックリストから除外しますか？")){
-      let jsonBlacklist = JSON.stringify(blackList.filter(is_not_in(seller)));
+      blackList.splice(blackList.indexOf(seller),1);
+      let jsonBlacklist = JSON.stringify(blackList);
       browser.storage.local.set({"keyScalperList":jsonBlacklist});
       qd_mark_resaler(JSON.parse(jsonBlacklist),type);
     }
@@ -219,4 +220,15 @@ function init() {
     console.error("Error: ${error}");
   });
 }
+
+// bgs.js 要求セラーコードトグル処理
+browser.runtime.onMessage.addListener(
+  // {{{
+  function(request,sender,sendResponse){
+    black_list_switch(request.scalperCode,'amazon');
+    sendResponse("");
+    return true;
+  }
+  // }}}
+);
 
