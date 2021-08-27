@@ -1,4 +1,5 @@
 function mergeScalperList(e) {
+  // {{{
   e.preventDefault();
   console.log('mergeScalperList(e)')
   let strInputList = document.querySelector("#listofscalper").value;
@@ -51,9 +52,11 @@ function mergeScalperList(e) {
       error.preventDefault();
     });
   }
+  // }}}
 }
 
 function restoreScalperList(e) {
+  // {{{
   e.preventDefault();
   let ScalperList = document.querySelector("#listofscalper").value;
   try{
@@ -84,7 +87,44 @@ function restoreScalperList(e) {
       }
     );
   }
+  // }}}
 }
+
+function restoreSeller() {
+  // {{{
+  let strData = document.querySelector("#dataofseller").value;
+  let tmp = JSON.stringify(JSON.parse(strData));
+  console.log(tmp);
+  browser.storage.local.set({"keySellerData":tmp});
+  // }}}
+}
+
+function mergeSeller() {
+  // {{{
+  let inputArr, storeArr;
+  inputArr = JSON.parse(document.querySelector("#dataofseller").value);
+  browser.storage.local.get("keySellerData")
+  .then(result => {
+    storeArr=JSON.parse(result.keySellerData);
+    // オブジェクトの配列のマージ
+    inputArr.forEach(elm => {
+      let sts = storeArr.find(element => (element.asin==elm.asin)&&(element.sellerCode==elm.sellerCode));
+      if (!sts) storeArr.push(elm);
+    });
+    browser.storage.local.set({"keySellerData": JSON.stringify(storeArr)});
+  });
+  // }}}
+}
+
+function clearSeller(){
+  browser.storage.local.remove("keySellerData");
+}
+
+// {{{
 document.querySelector("#form").addEventListener("submit", this.restoreScalperList);
 document.querySelector("#merge").addEventListener("click", this.mergeScalperList);
+document.querySelector("#restoreseller").addEventListener("click", this.restoreSeller);
+document.querySelector("#mergeseller").addEventListener("click", this.mergeSeller);
+document.querySelector("#clearseller").addEventListener("click", this.clearSeller);
+// }}}
 

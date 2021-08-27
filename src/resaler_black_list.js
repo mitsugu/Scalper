@@ -4,6 +4,7 @@ ut1=Math.round((new Date()).getTime() / 1000); // ダブルクリック検知用
 // 「Scalper」と表示を出すために使うCSSの雛形です */
 var base_prime={};
 
+// {{{
 base_prime['amazon']=(function() {/*
   [href],[data-a-popover]{
     opacity:.7;
@@ -30,10 +31,12 @@ base['amazon']=(function() {/*
     color:red;
   }
 */}).toString().match(/[^]*\/\*([^]*)\*\/\}$/)[1];
+// }}}
 
 // urlのgetパラメータを取得します。
 // 販売店のセラーIDをブラックリストに追加するのに必要
 function getUrlVars(url){
+  // {{{
   var vars = {};
   if(url){
     try{
@@ -58,10 +61,12 @@ function getUrlVars(url){
     var vars={};
   }
   return vars;
+  // }}}
 }
 
 // Scalperをマーキング
 function qd_mark_resaler(ids,type){
+  // {{{
   if(document.querySelector("#amazon_black_list")){
     var style=document.querySelector("#amazon_black_list");
   }else{
@@ -77,6 +82,7 @@ function qd_mark_resaler(ids,type){
   }
   style.innerHTML=style_string;
   document.body.appendChild(style);
+  // }}}
 }
 
 loaded=true;
@@ -84,28 +90,35 @@ var my_timer
 
 // 配列のフィルタで使う関数
 function is_in(target){
+  // {{{
   return function(value){
     return (target==value);
   }
+  // }}}
 }
 
 /*配列のフィルタで使う関数 */
 function is_not_in(target){
+  // {{{
   return function(value){
     return (target!=value);
   }
+  // }}}
 }
 
 // ブラックリストで使う関数
 function add_black_list(id){
+  // {{{
   if(blackList.filter(is_in(id)).length==0){
     blackList.push(id);
     browser.storage.local.set({"keyScalperList":JSON.stringify(blackList)});
   }
+  // }}}
 }
 ut1=0;
 
 function black_list_switch(seller,type){
+  // {{{
   if(blackList.indexOf(seller)<0){
     if(confirm("このセラーをブラックリストに追加しますか？")){
       blackList.push(seller);
@@ -121,10 +134,12 @@ function black_list_switch(seller,type){
       qd_mark_resaler(JSON.parse(jsonBlacklist),type);
     }
   }
+  // }}}
 }
 
 var seller_id="";
 function on_amazon(){
+  // {{{
   // とりあえずScalperをマーキング
   qd_mark_resaler(blackList,'amazon');
   if(location.href.split("?")[0].split('/').length=='4'){
@@ -149,10 +164,12 @@ function on_amazon(){
       alert("セラーのIDが取得できませんでした。")
     }
   }
+  // }}}
 }
 
 var type='';  // ここでどのサイト用のCSSを指定するか決める
 function amazon_black_list(strBlockList){
+  // {{{
   // ut=Math.round((new Date()).getTime() / 1000);
   // ブラックリストを読み出し
   blackList=[];
@@ -209,9 +226,11 @@ function amazon_black_list(strBlockList){
 }}} */
 
   alert("現在対応しているのはアマゾンのみです")
+  // }}}
 }
 
 function init() {
+  // {{{
   let gettingItem = browser.storage.local.get("keyScalperList");
   gettingItem.then((result) => {
     let jsonBlackList = result.keyScalperList;
@@ -219,6 +238,7 @@ function init() {
   }).catch((error) => {
     console.error("Error: ${error}");
   });
+  // }}}
 }
 
 // bgs.js 要求セラーコードトグル処理
