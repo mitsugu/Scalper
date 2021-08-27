@@ -16,7 +16,7 @@ function onError(error) {
 }
 
 function getTabId() {
-  var querying = browser.tabs.query({url: "https://*.amazon.co.jp/*"});
+  var querying = browser.tabs.query({active: true, currentWindow: true});
   querying.then(setTabId, onError);
 }
 

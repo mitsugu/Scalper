@@ -225,7 +225,9 @@ function init() {
 browser.runtime.onMessage.addListener(
   // {{{
   function(request,sender,sendResponse){
-    black_list_switch(request.scalperCode,'amazon');
+    if(request.command=="setScalper"){
+      black_list_switch(request.scalperCode,'amazon');
+    }
     sendResponse("");
     return true;
   }
