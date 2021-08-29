@@ -94,13 +94,18 @@ function editAddress(elm){
 
 function getSellerAttribute(strDoc) {
   // {{{
-  let ret = {};
+  let ret = {
+    name  : "",
+    tel   : "",
+    resp  : "",
+    store : "",
+    addr  : ""
+  };
   let dp = new DOMParser();
   let elms = evaluateXPath(
     "//div[@id='seller-profile-container']//h3[@id='-component-heading']/following-sibling::ul/li",
     dp.parseFromString(strDoc,"text/html")
   );
-  console.log(elms);
   for(let i=0;i<elms.length;i++){
     if(elms[i].textContent.match(/販売業者/i)!==null){
       ret.name = elms[i].textContent.replace("販売業者:","");
@@ -150,31 +155,29 @@ function getSellerData(url){
 
 function collectSeller(info){
   // {{{
+console.log(info);
   getSellerData(info.linkUrl)
   .then(sellerData => {
     browser.tabs.query({active: true, currentWindow: true})
     .then(data => {
       if(data.length==1){
-        browser.tabs.query({active: true, lastFocusedWindow: true})
-        .then(res => {
-          browser.tabs.sendMessage(
-            res[0].id,
-            {
-              "command"         : "collectSeller",
-              "asin"            : getAsin(info),
-              "sellerCode"      : getSellerCode(info),
-              "distributorName" : sellerData.name,
-              "tel"             : sellerData.tel,
-              "addr"            : sellerData.addr,
-              "resp"            : sellerData.resp,
-              "store"           : sellerData.store,
-              "linkText"        : info.linkText,
-              "linkUrl"         : info.linkUrl,
-              "pageUrl"         : info.pageUrl,
-              "targetElementId" : info.targetElementId
-            }
-          ).then(response => {});
-        });
+        browser.tabs.sendMessage(
+          data[0].id,
+          {
+            "command"         : "collectSeller",
+            "asin"            : getAsin(info),
+            "sellerCode"      : getSellerCode(info),
+            "distributorName" : sellerData.name,
+            "tel"             : sellerData.tel,
+            "addr"            : sellerData.add,
+            "resp"            : sellerData.resp,
+            "store"           : sellerData.store,
+            "linkText"        : info.linkText,
+            "linkUrl"         : info.linkUrl,
+            "pageUrl"         : info.pageUrl,
+            "targetElementId" : info.targetElementId
+          }
+        ).then(response => {});
       }
     });
   }).catch(err => {

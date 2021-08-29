@@ -1,25 +1,36 @@
 # 転売屋表示・管理ツール
 
-## これは何
-　Amazon を闊歩している転売セラーを識別可能なように表示し、転売セラーのリストを管理します 。
+## これは何か
+　Scalper Manager は [](https://note.com/jackpot_hide/n/n228b0876673d) で公開されているブックマークレットをアップストリームとして Firefox 拡張としてパッケージングし機能を追加したものです。
 
-## オリジナルのコード
-　[秀さん](https://note.com/jackpot_hide)が公開されている[アマゾン転売屋ブラックリストツール](https://be0.dev/amazon_resale_marker/bookmarklet.html) Google Chrome 拡張版がオリジナルです。秀さんに直接許諾を受け Firefox Addon 用に機能を追加しています。
+## 何ができるのか
+　Scalper Manager は Amazon で跋扈している高額転売セラーならびに違法セラーをブラウザ内でデータベース化し見える化することで管理、回避することができます。もちろん回避するかどうかはユーザにまかされています。  
+　また関係機関に通報する必要が生じたときのためにデータを json 形式でエクスポートすることができます。関係機関向けのデータ加工は ( 例えば csv 化等 ) はユーザ自身で行ってください。  
+追記：  
+　違法セラー json データを csv に変換するコマンドラインツールを書きました。  
+　[](https://github.com/mitsugu/changeseller)
 
-## オリジナルとの違い
-+ Firefox 用アドオン ( Google Chrome での動作を未保証 )
-+ 現時点で Amazon.co.jp 専用
-+ "転売ヤー" という表記を "Scalper" に変更(日本語でダフ屋という意味)
-+ Firefox 用に CSS を修正
-+ コンテキストメニューを追加し Scalper リストをテキストファイル blacklist.json に出力
-+ オプションページを追加し Scalper リストblacklist.json の内容をコピーアンドペーストすることで設定可能に
+## ブックマークレット版からの追加機能
+* コンテキストメニュー "Toggle Scalper's Mark" によるセラーの登録・解除
+* コンテキストメニュー "Export Scalper List" による高額転売セラーコードリストのエクスポート  
+ファイル名の形式は "blacklist-yyyy-mm-dd.json"
+* オプションページによる高額転売セラーリストのリストア・マージ
+* コンテキストメニュー "Collect sellers" による違法セラーデータの収集
+* コンテキストメニュー "Export Seller Data" による違法セラーデータのエクスポート  
+ファイル名の形式は "sellerdata-yyyymmdd-hhmmss.json"　
+* オプションページによる違法セラーデータのレストア・マージ
+* オプションページによる違法セラーデータのクリア
 
-## オリジナルからの機能継承
-+ [アマゾン転売屋ブラックリストツール](https://be0.dev/amazon_resale_marker/bookmarklet.html) ブックマークレット版との連携
+## ブックマークレット版からの削除機能
+* ブックマークレット作者のサーバーとの通信機能
+* ブックマークレット版 csv エクスポート機能
 
-## ライセンス
-　オリジナルのコードがオープンソースライセンスではないため、Copyright All Right Reserved ということでお願いします。
+## その他
+　Scalper managerの使い方は上記 URL を参照してください。基本機能の使い方は追加した機能を除いてアップストリームのブックマークレットと一緒です。
+
+## ソースコードライセンス
+　Scalper Manager のソースコードは [](https://github.com/mitsugu/Scalper) で公開していますが、アップストリームのコードにOSSライセンスが設定されていないため"Copyright All Right Reserved"とし、著作権者はアップストリームのブックマークレット作者とします。
 
 ## 今後の予定
-　 issue を参照してください。
+　issue を参照してください。
 

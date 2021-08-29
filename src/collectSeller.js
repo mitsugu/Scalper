@@ -22,30 +22,28 @@ function evaluateXPath(aExpr,aNode) {
 
 function getPrice(sellerCode) {
   // {{{
-  let ret = 0;
+  let ret = "";
   let strExpr = "//a[contains(@href,'seller="+sellerCode+"') and @aria-label='新しいページを開く']/../../../../../div[@id='aod-offer-price']//span[@class='a-price-whole']/text()";
   let elms = evaluateXPath(strExpr,document);
+console.log(elms);
   if(elms.length>0){
     ret = elms[0].nodeValue.replace(",","");
+  }else{
+    ret = "";
   }
+console.log("price : "+ret);
   return ret;
   // }}}
 }
 
 function saveLocalStorage(data){
   // {{{
-  //browser.storage.local.remove("keySellerData")
-  //return;
-  console.log(data);
   browser.storage.local.get("keySellerData")
   .then(result => {
-    console.log(result);
     let dataList = [];
-    console.log(Object.keys(result).length);
     if(Object.keys(result).length>0){
       dataList = JSON.parse(result.keySellerData);
       let sts = dataList.find(element => (element.asin==data.asin)&&(element.sellerCode==data.sellerCode));
-      console.log(sts);
       if (!sts){
         dataList.push(data);
         browser.storage.local.set({"keySellerData":JSON.stringify(dataList)});
@@ -97,6 +95,7 @@ function exportSellerData(){
 browser.runtime.onMessage.addListener(
   // {{{
   function(request,sender,sendResponse){
+console.log(request);
     if(request.command=="collectSeller") {
       let price = getPrice(request.sellerCode);
       request.price = price;
