@@ -1,14 +1,14 @@
 # 転売屋表示・管理ツール
 
 ## これは何か
-　Scalper Manager は [](https://note.com/jackpot_hide/n/n228b0876673d) で公開されているブックマークレットをアップストリームとして Firefox 拡張としてパッケージングし機能を追加したものです。
+　Scalper Manager は https://note.com/jackpot_hide/n/n228b0876673d で公開されているブックマークレットをアップストリームとして Firefox 拡張としてパッケージングし機能を追加したものです。
 
 ## 何ができるのか
 　Scalper Manager は Amazon で跋扈している高額転売セラーならびに違法セラーをブラウザ内でデータベース化し見える化することで管理、回避することができます。もちろん回避するかどうかはユーザにまかされています。  
 　また関係機関に通報する必要が生じたときのためにデータを json 形式でエクスポートすることができます。関係機関向けのデータ加工は ( 例えば csv 化等 ) はユーザ自身で行ってください。  
 追記：  
 　違法セラー json データを csv に変換するコマンドラインツールを書きました。  
-　[](https://github.com/mitsugu/changeseller)
+　https://github.com/mitsugu/changeseller
 
 ## ブックマークレット版からの追加機能
 * コンテキストメニュー "Toggle Scalper's Mark" によるセラーの登録・解除
@@ -29,7 +29,7 @@
 　Scalper managerの使い方は上記 URL を参照してください。基本機能の使い方は追加した機能を除いてアップストリームのブックマークレットと一緒です。
 
 ## ソースコードライセンス
-　Scalper Manager のソースコードは [](https://github.com/mitsugu/Scalper) で公開していますが、アップストリームのコードにOSSライセンスが設定されていないため"Copyright All Right Reserved"とし、著作権者はアップストリームのブックマークレット作者とします。
+　Scalper Manager のソースコードは https://github.com/mitsugu/Scalper で公開していますが、アップストリームのコードにOSSライセンスが設定されていないため"Copyright All Right Reserved"とし、著作権者はアップストリームのブックマークレット作者とします。
 
 ## 今後の予定
 　issue を参照してください。
