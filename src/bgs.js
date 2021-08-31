@@ -108,15 +108,15 @@ function getSellerAttribute(strDoc) {
   );
   for(let i=0;i<elms.length;i++){
     if(elms[i].textContent.match(/販売業者/i)!==null){
-      ret.name = elms[i].textContent.replace("販売業者:","");
+      ret.name = elms[i].textContent.replace("販売業者:","").replace(/\,/g," ");
     }else if(elms[i].textContent.match(/電話番号/i)!==null){
       ret.tel = elms[i].textContent.replace("お問い合わせ先電話番号:","");
     }else if(elms[i].textContent.match(/運営責任者名/i)!==null){
-      ret.resp = elms[i].textContent.replace("運営責任者名:","");
+      ret.resp = elms[i].textContent.replace("運営責任者名:","").replace(/\,/g," ");
     }else if(elms[i].textContent.match(/店舗名/i)!==null){
-      ret.store = elms[i].textContent.replace("店舗名:","");
+      ret.store = elms[i].textContent.replace("店舗名:","").replace(/\,/g," ");
     }else if(elms[i].textContent.match(/住所/i)!==null){
-      ret.addr = editAddress(elms[i]);
+      ret.addr = editAddress(elms[i]).replace(/\,/g," ");
     }else{
       console.error(elms[i]);
     }
@@ -172,7 +172,7 @@ console.log(info);
             "addr"            : sellerData.add,
             "resp"            : sellerData.resp,
             "store"           : sellerData.store,
-            "linkText"        : info.linkText,
+            "linkText"        : info.linkText.replace(/\,/g," "),
             "linkUrl"         : info.linkUrl,
             "pageUrl"         : info.pageUrl,
             "targetElementId" : info.targetElementId
