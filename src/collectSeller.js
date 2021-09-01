@@ -23,15 +23,28 @@ function evaluateXPath(aExpr,aNode) {
 function getPrice(sellerCode) {
   // {{{
   let ret = "";
-  let strExpr = "//a[contains(@href,'seller="+sellerCode+"') and @aria-label='新しいページを開く']/../../../../../div[@id='aod-offer-price']//span[@class='a-price-whole']/text()";
+  let strExpr = "//a[contains(@href,'seller="+sellerCode+"') and @aria-label='新しいページを開く']/../../../../..";
   let elms = evaluateXPath(strExpr,document);
-console.log(elms);
-  if(elms.length>0){
-    ret = elms[0].nodeValue.replace(",","");
-  }else{
-    ret = "";
+  switch(elms.length) {
+    case 1:
+      strExpr = "//a[contains(@href,'seller="+sellerCode+"') and @aria-label='新しいページを開く']/../../../../../div[@id='aod-offer-price']//span[@class='a-price-whole']/text()";
+      elms = evaluateXPath(strExpr,document);
+      if(elms.length>0){
+        ret = elms[0].nodeValue.replace(",","");
+      }else{
+        ret = "";
+      }
+      break;
+   default:
+      strExpr = "//div[@id='all-offers-display']//div[@id='all-offers-display-scroller']//div[@id='aod-container']//div[@id='aod-pinned-offer']//div[@id='pinned-offer-top-id']//div[contains(@id,'aod-price')]//span[@class='a-price-whole']/text()";
+      elms = evaluateXPath(strExpr,document);
+      if (elms.length>0 ){
+        ret = elms[0].nodeValue.replace(",","");
+      } else {
+        ret = "";
+      }
+      break;
   }
-console.log("price : "+ret);
   return ret;
   // }}}
 }
